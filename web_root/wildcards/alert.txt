@@ -7,13 +7,11 @@
         // If not, use the teachers url for the alert.
         if (window.location.href.indexOf('admin') != -1) {
     %>
-        <a class="dialogM" title="IEP Alert" id="iep-alert" href title='Student Services Alert'
-           dialogcontent="/admin/alerts/iepalert.html?frn=~(studentfrn)">
+        <a class="dialogM" title="IEP Alert" id="iep-alert" href="/admin/alerts/iepalert.html?frn=~(studentfrn)">
     <%
         } else {
     %>
-        <a class="dialogM" title="IEP Alert" id="iep-alert" href title='Student Services Alert'
-           dialogcontent="/teachers/alerts/iepalert.html?frn=~(studentfrn)">
+        <a class="dialogM" title="IEP Alert" id="iep-alert" href="/teachers/alerts/iepalert.html?frn=~(studentfrn)">
     <%
         }
     %>
