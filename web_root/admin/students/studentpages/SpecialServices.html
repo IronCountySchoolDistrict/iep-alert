@@ -12,7 +12,23 @@
             var inputTableRows = $j('tr').has('input,select,textarea');
             inputTableRows.filter(':even').addClass('oddRow');
             inputTableRows.filter(':odd').addClass('evenRow');
+
+            function countChar(val) {
+                var len = val.value.length;
+                if (len >= 400) {
+                    val.value = val.value.substring(0, 400);
+                    $j('#rem-chars').text("0 characters remaining");
+                } else {
+                    $j('#rem-chars').text(400 - len + " characters remaining");
+                }
+            }
+
+            $j('#additional-adaptations').on('keyup', function(event) {
+                countChar(event.target);
+            });
         });
+
+
 
     </script>
 
@@ -166,11 +182,19 @@
 
             <tr class="bold">
                 <td>Additional Classroom Adaptations:</td>
-                <td rowspan="5"><textarea name="[Students.U_Sped]additional_adaptions" value="" rows="8"
-                                          cols="50"></textarea></td>
+                <td rowspan="5">
+                    <textarea id="additional-adaptations" name="[Students.U_Sped]additional_adaptions" value="" rows="8"
+                              cols="50"></textarea>
+                    <span id="rem-chars" style="
+                        display: block;
+                        color: grey;
+                        line-height: 1.0em;
+                        font-size: small;">400 characters remaining</span>
+                </td>
             </tr>
         </table>
         <input type="hidden" name="ac" value="prim">
+
         <div class="button-row">~[submitbutton]</div>
     </div>
     <br/>
