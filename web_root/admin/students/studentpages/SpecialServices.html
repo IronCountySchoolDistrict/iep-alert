@@ -23,19 +23,14 @@
                 }
             }
 
-            $j('#additional-adaptations').on('keyup', function(event) {
+            $j('#additional-adaptations').on('keyup paste', function (event) {
                 countChar(event.target);
             });
         });
-
-
-
     </script>
-
 </head>
 
 <body>
-
 <form action="/admin/changesrecorded.white.html" method="POST">
 
     ~[wc:admin_header_frame_css]<a href="/admin/home.html" target="_top">Start Page</a> &gt; <a
