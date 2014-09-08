@@ -1,7 +1,7 @@
 <!-- This page contains the pop-up content that is seen when a user clicks on the alert icon on PS Teacher and PS Admin -->
 <!--
-    TODO: Refactor this page so it doesn't directly use custom fields data in headerTemplate logic.
-    Use javascript object to store that data instead and pass that into _.headerTemplate function
+    TODO: Refactor this page so it doesn't directly use custom fields json in headerTemplate logic.
+    Use javascript object to store that json instead and pass that into _.headerTemplate function
 -->
 <script type="text/template" id="alert-content-template">
     <div id="alert-content" style="width: auto;">
