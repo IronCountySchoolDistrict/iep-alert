@@ -7,32 +7,31 @@
     // If not, use the teachers url for the alert.
     if (window.location.href.indexOf('admin') != -1) {
     %>
-    <a class="dialogM" title="IEP Alert" id="iep-alert" href title='Student Services Alert'
-       dialogcontent="/admin/alerts/iepalert.html?frn=~(studentfrn)">
-        <%
-        } else {
-        %>
-        <a class="dialogM" title="IEP Alert" id="iep-alert" href title='Student Services Alert'
-           dialogcontent="/teachers/alerts/iepalert.html?frn=~(studentfrn)">
-            <%
-            }
-            %>
-            <img id='alert-img' style="display:none"
-                 src="/images/icon-i.png"
-                 height="20" width="19"
-                 alt="Student Services Alert" border="0">
-        </a>
-        <!-- Custom alert end -->
+        <a class="dialogM" title="IEP Alert" id="iep-alert" href="/admin/alerts/iepalert.html?frn=~(studentfrn)" title='Student Services Alert'>
+    <%
+    } else {
+    %>
+        <a class="dialogM" title="IEP Alert" id="iep-alert" href="/teachers/alerts/iepalert.html?frn=~(studentfrn)" title='Student Services Alert'>
+    <%
+    }
+    %>
+    <img id='alert-img' style="display:none"
+         src="/images/icon-i.png"
+         height="20" width="19"
+         alt="Student Services Alert" border="0">
+    </a>
+    <!-- Custom alert end -->
 </script>
 
 <script type="text/javascript">
-    require(['underscore'], function () {
+    require(['underscore'], function (_) {
         'use strict';
         if (psData === undefined) {
             var psData = {};
         }
-        psData.studentfrn = "~(studentfrn)";
-        $j.getJSON('/admin/json/alert.json.html?frn=' + psData.studentfrn, function (alert) {
+        psData.studentdcid = "~(studentfrn)".slice(3);
+        $j.getJSON('/ws/schema/table/U_SPED_STUDENTS/' + psData.studentdcid + '?projection=*', function (alertResp) {
+            var alert = alertResp.tables['u_sped_students'];
             var alertTemplate = $j('#alert-template').html();
             var renderedTemplate = _.template(alertTemplate, {});
             var pageHeader = $j('h1');
@@ -46,7 +45,7 @@
                 $j(renderedTemplate).insertAfter(select);
             }
 
-            if (alert.caseload !== ' ') {
+            if (alert.caseload) {
                 $j('#alert-img').css({'display': 'inline'});
             }
 
