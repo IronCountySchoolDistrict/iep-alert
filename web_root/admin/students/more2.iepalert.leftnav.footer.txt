@@ -1,6 +1,7 @@
 <script type="text/template" id="special-services-template">
-    <a href="studentpages/SpecialServices.html?frn=~(studentfrn)">Special Services</a>
-    <br />
+    <li>
+        <a href="studentpages/SpecialServices.html?frn=~(studentfrn)">Special Services</a>
+    </li>
 </script>
 
 <script>
@@ -8,7 +9,7 @@
         var template = $j($j('#special-services-template').html());
 
         // Select the link right after where IEP Alerts will be inserted.
-        var select = $j('a:contains(Student Email)');
+        var select = $j('a:contains(Student Email)').parent('li');
         template.insertBefore(select);
     });
 </script>

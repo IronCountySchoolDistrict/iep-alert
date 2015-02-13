@@ -12,7 +12,7 @@
                 <p>
                 <ul>
                     <%
-                        if('~([Students.U_sped]disability)' != '&nbsp;') {
+                        if(alert.disability != ' ') {
                     %>
                         <li><span style="font-weight: bold;">Disability: </span>~([Students.U_sped]disability)</li>
                     <%
@@ -20,7 +20,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]behavior_plan)' == '1') {
+                        if(alert.behavior_plan) {
                     %>
                         <li><span style="font-weight: bold;">Behavioral Plan</span></li>
                     <%
@@ -28,7 +28,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]highlight_text)' == '1') {
+                        if(alert.highlight_text) {
                     %>
                         <li><span style="font-weight: bold;">Highlight text</span></li>
                     <%
@@ -36,7 +36,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]provide_paper_notes)' == '1') {
+                        if(alert.provide_paper_notes) {
                     %>
                         <li><span style="font-weight: bold;">Provide paper notes for the student</span></li>
                     <%
@@ -44,7 +44,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]resource_room)' == '1') {
+                        if(alert.resource_room) {
                     %>
                         <li><span style="font-weight: bold;">Resource room available for assistance</span></li>
                     <%
@@ -52,7 +52,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]extended_time_oral)' == '1') {
+                        if(alert.extended_time_oral) {
                     %>
                         <li><span style="font-weight: bold;">Give extended time limits for oral responses</span></li>
                     <%
@@ -60,7 +60,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]extended_time_limit_testing)' != '&nbsp;') {
+                        if(alert.extended_time_limit_testing !== ' ') {
                     %>
                         <li><span style="font-weight: bold;">Extended time limit for testing: </span>~([Students.U_Sped]extended_time_limit_testing) minutes</li>
                     <%
@@ -68,7 +68,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]extended_time_limit_asmt)' != '&nbsp;') {
+                        if(alert.extended_time_limit_asmt !== ' ') {
                     %>
                         <li><span style="font-weight: bold;">Extended time limit for assignments: </span>~([Students.U_Sped]extended_time_limit_asmt) days</li>
                     <%
@@ -76,7 +76,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]use_calculator)' == '1') {
+                        if(alert.use_calculator) {
                     %>
                         <li><span style="font-weight: bold;">Use of calculator and/or math fact sheet</span></li>
                     <%
@@ -84,7 +84,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]read_orally)' == '1') {
+                        if(alert.read_orally) {
                     %>
                         <li><span style="font-weight: bold;">Read assignments/tests orally</span></li>
                     <%
@@ -92,7 +92,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]reduce_exam_length)' == '1') {
+                        if(alert.reduce_exam_length) {
                     %>
                         <li><span style="font-weight: bold;">Reduce length of exam</span></li>
                     <%
@@ -100,7 +100,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]dont_check_spelling)' == '1') {
+                        if(alert.dont_check_spelling) {
                     %>
                         <li><span style="font-weight: bold;">Don't check spelling unless specifically stated</span></li>
                     <%
@@ -108,7 +108,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]books_on_tape)' == '1') {
+                        if(alert.books_on_tape) {
                     %>
                         <li><span style="font-weight: bold;">Books on tape (if available)</span></li>
                     <%
@@ -116,7 +116,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]minimize_work)' == '1') {
+                        if(alert.minimize_work') {
                     %>
                         <li><span style="font-weight: bold;">Minimize written work</span></li>
                     <%
@@ -124,7 +124,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]oral_presentation)' == '1') {
+                        if(alert.oral_presentation) {
                     %>
                         <li><span style="font-weight: bold;">Oral presentations may be given to teacher or in a small group setting</span></li>
                     <%
@@ -132,7 +132,7 @@
                     %>
 
                     <%
-                        if('~([Students.U_Sped]additional_adaptions)' != '&nbsp;') {
+                        if(alert.additional_adaptions) {
                     %>
                         <li><span style="font-weight: bold;">Additional Classroom Adaptations: </span>~([Students.U_Sped]additional_adaptions)</li>
                     <%
@@ -142,7 +142,7 @@
                 </p>
                 <p>Please contact
                     <%
-                        if ('~([Students.U_sped]caseload)' != '&nbsp;') {
+                        if (alert.caseload !== ' ') {
                     %>
                         ~([Students.U_sped]caseload)
                     <%
@@ -160,15 +160,20 @@
     </div>
 </script>
 <script>
-    require(['underscore'], function () {
+    if (psData === undefined) {
+        var psData = {};
+    }
+    psData.studentfrn = "~(studentfrn)";
+
+    $j.getJSON('/admin/json/alert.json.html?frn=' + psData.studentfrn, function (alert) {
         var template = $j('#alert-content-template').html();
         var select = $j('#psDialog');
-        var renderedTemplate = _.template(template, {});
+        var renderedTemplate = _.template(template, alert);
         select.html(renderedTemplate);
 
         // When the dialog is first rendered, there isn't any content in it, so the centering is based on
         // the empty dialog box. When content is put into it, it doesn't automatically recenter itself,
         // so calling this function will recenter the dialog box.
-        $j('#psDialog').dialog('option','position','center');
+        $j('#psDialog').dialog('option', 'position', 'center');
     });
 </script>
