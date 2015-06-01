@@ -5,11 +5,11 @@
 </script>
 
 <script>
-    $j(function() {
+    $j(function () {
         var template = $j($j('#special-services-template').html());
 
         // Select the link right after where IEP Alerts will be inserted.
-        var select = $j('a:contains(Student Email)').parent('li');
+        var select = $j('a:contains(Student Email)').parent();
         template.insertBefore(select);
     });
 </script>
