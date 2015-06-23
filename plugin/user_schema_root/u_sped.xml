@@ -15,7 +15,7 @@
         <field name="reduce_exam_length" type="Boolean"/>
         <field name="dont_check_spelling" type="Boolean"/>
         <field name="essays_oral_limit_writing" type="Boolean"/>
-        <field name="additional_adaptions" type="String" length="400"/>
+        <field name="additional_adaptions" type="String" length="1000"/>
         <field name="disability" type="String" length="40"/>
         <field name="books_on_tape" type="Boolean"/>
         <field name="read_orally" type="Boolean"/>
