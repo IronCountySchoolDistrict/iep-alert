@@ -15,12 +15,20 @@
     }
     %>
     <img id='alert-img' style="display:none"
-         src="/images/icon-i.png"
+         src="<!-- @echo IMAGE_SERVER_URL -->/images/iep-alert/icon-i.png"
          height="20" width="19"
          alt="Student Services Alert" border="0">
     </a>
     <!-- Custom alert end -->
 </script>
+
+<script>
+    if (psData === undefined) {
+        var psData = {};
+    }
+    psData.studentdcid = "~(studentfrn)".slice(3);
+</script>
+
 
 <script src="<!-- @echo IMAGE_SERVER_URL -->/scripts/iep-alert/alert.js"></script>
 <!-- End IEP Alert content -->

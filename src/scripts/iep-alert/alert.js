@@ -2,10 +2,6 @@
 
 require(['underscore', 'jquery'], function (_, $) {
         'use strict';
-        if (psData === undefined) {
-            var psData = {};
-        }
-        psData.studentdcid = "~(studentfrn)".slice(3);
         $.getJSON('/ws/schema/table/U_SPED_STUDENTS/' + psData.studentdcid + '?projection=*', function (alertResp) {
             var alert = alertResp.tables['u_sped_students'];
             var alertTemplate = $('#alert-template').html();
