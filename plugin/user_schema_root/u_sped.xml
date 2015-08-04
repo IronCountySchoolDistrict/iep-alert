@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <psExtension xmlns="http://www.powerschool.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.powerschool.com psextension.xsd">
     <extensionname>U_Sped</extensionname>
-    <extendedTable coreTable="Students" dbTableName="U_SPED_STUDENTS" comment="">
+    <extendedTable coreTable="Students" dbTableName="U_SPED_STUDENTS2" comment="">
         <field name="extended_time_limit_testing" type="Integer"/>
         <field name="oral_presentation" type="Boolean"/>
         <field name="extended_time_limit_asmt" type="Integer"/>
@@ -15,7 +15,7 @@
         <field name="reduce_exam_length" type="Boolean"/>
         <field name="dont_check_spelling" type="Boolean"/>
         <field name="essays_oral_limit_writing" type="Boolean"/>
-        <field name="additional_adaptions" type="String" length="1000"/>
+        <field name="additional_adaptations" type="String" length="4000"/>
         <field name="disability" type="String" length="40"/>
         <field name="books_on_tape" type="Boolean"/>
         <field name="read_orally" type="Boolean"/>

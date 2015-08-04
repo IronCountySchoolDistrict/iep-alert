@@ -1,11 +1,13 @@
 /* global psData, require */
 require(["underscore", "jquery"], function(_, $) {
 
-    $.getJSON('/ws/schema/table/U_SPED_STUDENTS/' + psData.studentdcid + '?projection=*', function (alertResp) {
-        var alert = alertResp.tables.u_sped_students;
+    $.getJSON('/ws/schema/table/U_SPED_STUDENTS2/' + psData.studentdcid + '?projection=*', function (alertResp) {
+        var alert = alertResp.tables.u_sped_students2;
         var template = $('#alert-content-template').html();
         var select = $('#psDialog');
-        alert.additional_adaptions = alert.additional_adaptions.replace(/\n/g, "<br>");
+        if (alert.additional_adaptations) {
+          alert.additional_adaptations = alert.additional_adaptations.replace(/\n/g, "<br>");
+        }
         var renderedTemplate = _.template(template, {alert: alert});
         select.html(renderedTemplate);
 

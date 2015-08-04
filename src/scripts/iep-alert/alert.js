@@ -2,8 +2,8 @@
 
 require(['underscore', 'jquery'], function (_, $) {
         'use strict';
-        $.getJSON('/ws/schema/table/U_SPED_STUDENTS/' + psData.studentdcid + '?projection=*', function (alertResp) {
-            var alert = alertResp.tables['u_sped_students'];
+        $.getJSON('/ws/schema/table/U_SPED_STUDENTS2/' + psData.studentdcid + '?projection=*', function (alertResp) {
+            var alert = alertResp.tables['u_sped_students2'];
             var alertTemplate = $('#alert-template').html();
             var renderedTemplate = _.template(alertTemplate, {});
             var pageHeader = $('h1');

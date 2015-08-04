@@ -12,7 +12,7 @@
                 <p>
                 <ul>
                     <%
-                        if(alert.disability === "true") {
+                        if(alert.disability) {
                     %>
                         <li><span style="font-weight: bold;">Disability: </span><%= alert.disability %></li>
                     <%
@@ -132,9 +132,9 @@
                     %>
 
                     <%
-                        if(alert.additional_adaptions) {
+                        if(alert.additional_adaptations) {
                     %>
-                        <li><span style="font-weight: bold;">Additional Classroom Adaptations: </span><%= alert.additional_adaptions %></li>
+                        <li><span style="font-weight: bold;">Additional Classroom Adaptations: </span><%= alert.additional_adaptations %></li>
                     <%
                         }
                     %>

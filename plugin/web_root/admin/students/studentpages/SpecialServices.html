@@ -15,11 +15,11 @@
 
             function countChar(val) {
                 var len = val.value.length;
-                if (len >= 1000) {
-                    val.value = val.value.substring(0, 1000);
+                if (len >= 4000) {
+                    val.value = val.value.substring(0, 4000);
                     $j("#rem-chars").text("0 characters remaining");
                 } else {
-                    $j("#rem-chars").text(1000 - len + " characters remaining");
+                    $j("#rem-chars").text(4000 - len + " characters remaining");
                 }
             }
 
@@ -29,7 +29,7 @@
             });
 
             // If page is visited with existing data, update characters remaining
-        
+
             if (additionalAdaptations.val()) {
                 countChar($j("#additional-adaptations").get(0));
             }
@@ -185,13 +185,13 @@
             <tr class="bold">
                 <td>Additional Classroom Adaptations:</td>
                 <td rowspan="5">
-                    <textarea id="additional-adaptations" name="[Students.U_Sped]additional_adaptions" value="" rows="8"
+                    <textarea id="additional-adaptations" name="[Students.U_Sped]additional_adaptations" value="" rows="8"
                               cols="50"></textarea>
                     <span id="rem-chars" style="
                         display: block;
                         color: grey;
                         line-height: 1.0em;
-                        font-size: small;">1000 characters remaining</span>
+                        font-size: small;">4000 characters remaining</span>
                 </td>
             </tr>
         </table>
