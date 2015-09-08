@@ -6,7 +6,7 @@
 <script type="text/template" id="alert-content-template">
     <div id="alert-content" style="width: auto;">
         <div class="studentAlert" id="alert-balance~(studentfrn)">
-            <img class="alertImage" src="<!-- @echo IMAGE_SERVER_URL -->/images/iep-alert/icon-i.png" />
+            <img class="alertImage" src="/images/iep-alert/icon-i.png" />
             <div class="alertContent">
                 <p class="alertHeader">~(studentname)</p>
                 <p>
