@@ -1,0 +1,123 @@
+~[tlist_sql;
+SELECT
+  STUDENTSDCID,
+  replace(replace(replace(replace(replace(replace(replace(ADDITIONAL_ADAPTATIONS, '\', '\\'), '"','\"'), CHR(9),'\t'),CHR(8),'\b'),CHR(13),'\r'),CHR(12),'\f'),CHR(10),'\n') as ADDITIONAL_ADAPTATIONS,
+  CASE BEHAVIOR_PLAN
+  WHEN 1
+    THEN 'true'
+  WHEN 0
+    THEN 'false'
+  ELSE 'false'
+  END AS BEHAVIOR_PLAN,
+  CASE BOOKS_ON_TAPE
+  WHEN 1
+    THEN 'true'
+  WHEN 0
+    THEN 'false'
+  ELSE 'false'
+  END AS BOOKS_ON_TAPE,
+  CASE DONT_CHECK_SPELLING
+  WHEN 1
+    THEN 'true'
+  WHEN 0
+    THEN 'false'
+  ELSE 'false'
+  END AS DONT_CHECK_SPELLING,
+  CASE ESSAYS_ORAL_LIMIT_WRITING
+  WHEN 1
+    THEN 'true'
+  WHEN 0
+    THEN 'false'
+  ELSE 'false'
+  END AS ESSAYS_ORAL_LIMIT_WRITING,
+  EXTENDED_TIME_LIMIT_ASMT,
+  EXTENDED_TIME_LIMIT_TESTING,
+  CASE EXTENDED_TIME_ORAL
+  WHEN 1
+    THEN 'true'
+  WHEN 0
+    THEN 'false'
+  ELSE 'false'
+  END AS EXTENDED_TIME_ORAL,
+  CASE HIGHLIGHT_TEXT
+  WHEN 1
+    THEN 'true'
+  WHEN 0
+    THEN 'false'
+  ELSE 'false'
+  END AS HIGHLIGHT_TEXT,
+  CASE MINIMIZE_WORK
+  WHEN 1
+    THEN 'true'
+  WHEN 0
+    THEN 'false'
+  ELSE 'false'
+  END AS MINIMIZE_WORK,
+  CASE ORAL_PRESENTATION
+  WHEN 1
+    THEN 'true'
+  WHEN 0
+    THEN 'false'
+  ELSE 'false'
+  END AS ORAL_PRESENTATION,
+  CASE PROVIDE_PAPER_NOTES
+  WHEN 1
+    THEN 'true'
+  WHEN 0
+    THEN 'false'
+  ELSE 'false'
+  END AS PROVIDE_PAPER_NOTES,
+  CASE READ_ORALLY
+  WHEN 1
+    THEN 'true'
+  WHEN 0
+    THEN 'false'
+  ELSE 'false'
+  END AS READ_ORALLY,
+  CASE REDUCE_EXAM_LENGTH
+  WHEN 1
+    THEN 'true'
+  WHEN 0
+    THEN 'false'
+  ELSE 'false'
+  END AS REDUCE_EXAM_LENGTH,
+  CASE RESOURCE_ROOM
+  WHEN 1
+    THEN 'true'
+  WHEN 0
+    THEN 'false'
+  ELSE 'false'
+  END AS RESOURCE_ROOM,
+  CASE USE_CALCULATOR
+  WHEN 1
+    THEN 'true'
+  WHEN 0
+    THEN 'false'
+  ELSE 'false'
+  END AS USE_CALCULATOR,
+  CASELOAD,
+  DISABILITY
+FROM u_sped_students2
+WHERE studentsdcid=~[gpv:studentsdcid];nonemessage={}]
+  {
+    "studentsdcid": "~(studentsdcid;json)",
+    "additional_adaptations": "~(additional_adaptations;js)",
+    "behavior_plan": "~(behavior_plan;json)",
+    "books_on_tape": "~(books_on_tape;json)",
+    "dont_check_spelling": "~(dont_check_spelling;json)",
+    "essays_oral_limit_writing": "~(essays_oral_limit_writing;json)",
+    "extended_time_limit_asmt": "~(extended_time_limit_asmt;json)",
+    "extended_time_limit_testing": "~(extended_time_limit_testing;json)",
+    "extended_time_oral": "~(extended_time_oral;json)",
+    "highlight_text": "~(highlight_text;json)",
+    "minimize_work": "~(minimize_work;json)",
+    "oral_presentation": "~(oral_presentation;json)",
+    "provide_paper_notes": "~(provide_paper_notes;json)",
+    "read_orally": "~(read_orally;json)",
+    "reduce_exam_length": "~(reduce_exam_length;json)",
+    "resource_room": "~(resource_room;json)",
+    "use_calculator": "~(use_calculator;json)",
+    "caseload": "~(caseload;json)",
+    "disability": "~(disability;json)"
+  }
+[/tlist_sql]

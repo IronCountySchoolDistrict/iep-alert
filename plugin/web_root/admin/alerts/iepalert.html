@@ -1,3 +1,13 @@
 ~[wc:alert-content]
 
-<script src="/scripts/iep-alert/js/alert-content.js"></script>
+<script>
+  require.config({
+    paths: {
+      'alert-content': '/scripts/iep-alert/js/alert-content'
+    }
+  });
+
+  require(['alert-content'], function(alertContent) {
+    alertContent();
+  });
+</script>
