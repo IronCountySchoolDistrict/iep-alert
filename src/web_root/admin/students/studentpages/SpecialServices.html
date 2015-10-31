@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Special Services</title>
+  ~[wc:commonscripts]
+  <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+  <link href="/images/css/print.css" rel="stylesheet" media="print">
+
+  <script>
+    $j(document).ready(function() {
+      // Select all trs that contain an input OR headerSelect tag.
+      var inputTableRows = $j('tr').has('input,select,textarea');
+      inputTableRows.filter(':even').addClass('oddRow');
+      inputTableRows.filter(':odd').addClass('evenRow');
+
+      function countChar(val) {
+        var len = val.value.length;
+        if (len >= 4000) {
+          val.value = val.value.substring(0, 4000);
+          $j('#rem-chars').text('0 characters remaining');
+        } else {
+          $j('#rem-chars').text(4000 - len + ' characters remaining');
+        }
+      }
+
+      var additionalAdaptations = $j('#additional-adaptations');
+      additionalAdaptations.on('keyup paste', function(event) {
+        countChar(event.target);
+      });
+
+      // If page is visited with existing data, update characters remaining
+
+      if (additionalAdaptations.val()) {
+        countChar($j('#additional-adaptations').get(0));
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <form action="/admin/changesrecorded.white.html" method="POST">
+
+    ~[wc:admin_header_frame_css]<a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="SpecialServices.html?selectstudent=nosearch" target="_top">Student Selection</a> &gt; Special Services ~[wc:admin_navigation_frame_css] ~[wc:title_student_begin_css]Special
+    Services~[wc:title_student_end_css]
+    <br/>
+
+    <div class="box-round">
+
+      <table border="0" cellspacing="0" cellpadding="4" id="specser1">
+
+        <tr class="bold" style="background-color: #EDF3FE">
+          <td width="298px">General Information</td>
+          <td width="450px"></td>
+        </tr>
+
+        <tr class="bold">
+          <td>Caseload Manager:</td>
+          <td>
+            <input type="text" name="[Students.U_Sped]caseload" size="20" value="" required/>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Disability:</td>
+          <td align="left">
+            <select name="[Students.U_Sped]disability">
+              <option value=""></option>
+              <option value="Autism">Autism</option>
+              <option value="Deaf/Blindness">Deaf/Blindness</option>
+              <option value="Deafness">Deafness</option>
+              <option value="Developmental Delay">Developmental Delay</option>
+              <option value="Hearing Impairment">Hearing Impairment</option>
+              <option value="Intellectually Disabled">Intellectually Disabled</option>
+              <option value="Multiple Disabilities">Multiple Disabilities</option>
+              <option value="Orthopedic Impairment">Orthopedic Impairment</option>
+              <option value="Other Health Impairment">Other Health Impairment</option>
+              <option value="Serious Emotionally Disturbed">Serious Emotionally Disturbed</option>
+              <option value="Specific Learning Disability">Specific Learning Disability</option>
+              <option value="Speech/Language Impairment">Speech/Language Impairment</option>
+              <option value="Traumatic Brain Injury">Traumatic Brain Injury</option>
+              <option value="Visual Impairment">Visual Impairment</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Behavioral Plan:</td>
+          <td>
+            <input type="checkbox" name="[Students.U_Sped]behavior_plan" value="">Yes</input>
+          </td>
+        </tr>
+
+        <tr class="bold" style="background-color: #EDF3FE">
+          <td>Classroom Adaptations (Assume none if left unchecked.)</td>
+          <td></td>
+        </tr>
+
+        <tr class="bold">
+          <td>Highlight text:</td>
+          <td>
+            <input type="checkbox" name="[Students.U_Sped]highlight_text" value="">Yes</input>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Provide paper notes for the student:</td>
+          <td>
+            <input type="checkbox" name="[Students.U_Sped]provide_paper_notes" value="">Yes</input>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Resource room available for assistance:</td>
+          <td>
+            <input type="checkbox" name="[Students.U_Sped]resource_room" value="">Yes</input>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Give extended time limits for oral responses:</td>
+          <td>
+            <input type="checkbox" name="[Students.U_Sped]extended_time_oral" value="">Yes</input>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Extended time limit for testing (minutes):</td>
+          <td>
+            <select name="[Students.U_Sped]extended_time_limit_testing">
+              <option value=""></option>
+              <option value="15">15</option>
+              <option value="30">30</option>
+              <option value="45">45</option>
+              <option value="60">60</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Extended time limit for assignments (days):</td>
+          <td>
+            <select name="[Students.U_Sped]extended_time_limit_asmt">
+              <option value=""></option>
+              <option value="15">1</option>
+              <option value="30">2</option>
+              <option value="45">5</option>
+              <option value="60">7</option>
+              <option value="60">10</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Use of calculator and/or math fact sheet:</td>
+          <td>
+            <input type="checkbox" name="[Students.U_Sped]use_calculator" value="">Yes</input>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Read assignments/tests orally:</td>
+          <td>
+            <input type="checkbox" name="[Students.U_Sped]read_orally" value="">Yes</input>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Essays done orally or with limited writing:</td>
+          <td>
+            <input type="checkbox" name="[Students.U_Sped]essays_oral_limit_writing" value="">Yes</input>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Reduce length of exam:</td>
+          <td>
+            <input type="checkbox" name="[Students.U_Sped]reduce_exam_length" value="">Yes</input>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Don't check spelling unless specifically stated:</td>
+          <td>
+            <input type="checkbox" name="[Students.U_Sped]dont_check_spelling" value="">Yes</input>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Books on tape (if available):</td>
+          <td>
+            <input type="checkbox" name="[Students.U_Sped]books_on_tape" value="">Yes</input>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Minimize written work:</td>
+          <td>
+            <input type="checkbox" name="[Students.U_Sped]minimize_work" value="">Yes</input>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Oral presentations may be given to teacher or in a small group setting:</td>
+          <td>
+            <input type="checkbox" name="[Students.U_Sped]oral_presentation" value="">Yes</input>
+          </td>
+        </tr>
+
+        <tr class="bold">
+          <td>Additional Classroom Adaptations:</td>
+          <td rowspan="5">
+            <textarea id="additional-adaptations" name="[Students.U_Sped]additional_adaptations" value="" rows="8" cols="50"></textarea>
+            <span id="rem-chars" style="
+                        display: block;
+                        color: grey;
+                        line-height: 1.0em;
+                        font-size: small;">4000 characters remaining</span>
+          </td>
+        </tr>
+      </table>
+      <input type="hidden" name="ac" value="prim">
+
+      <div class="button-row">~[submitbutton]</div>
+    </div>
+    <br/> ~[wc:admin_footer_css]
+
+  </form>
+
+</body>
+
+</html>

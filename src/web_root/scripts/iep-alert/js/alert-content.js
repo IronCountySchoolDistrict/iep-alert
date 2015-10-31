@@ -9,6 +9,7 @@ export default function() {
     alertUrl = `/teachers/alerts/sped-alert.json.html?studentsdcid=${psData.studentdcid}`;
   }
 
+
   $.getJSON(alertUrl, function (alertResp) {
       var alert;
       if (getPortal() === 'admin') {
@@ -19,7 +20,7 @@ export default function() {
       var template = $('#alert-content-template').html();
       var select = $('#psDialog');
       if (alert.additional_adaptations) {
-        alert.additional_adaptations = alert.additional_adaptations.replace(/\n/g, "<br>");
+        alert.additional_adaptations = alert.additional_adaptations.replace(/\n/g, '<br>');
       }
       var renderedTemplate = _.template(template, {alert: alert});
       select.html(renderedTemplate);

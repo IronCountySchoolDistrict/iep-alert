@@ -1,0 +1,15 @@
+{
+  "ecmaFeatures": {
+    "modules": true,
+    "templateStrings": true
+  },
+  "globals": {
+    "window": true
+  },
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "quotes": [2, "single", "avoid-escape"]
+  }
+}

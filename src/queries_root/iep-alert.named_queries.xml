@@ -1,0 +1,58 @@
+<queries>
+
+  <query flattened="true" name="org.irondistrict.iep.queries.alert">
+    <args>
+      <arg description="cc.id" name="ccid" required="true" type="primitive"/>
+    </args>
+    <columns>
+      <column column="u_sped_students2.studentsdcid">studentsdcid</column>
+      <column column="u_sped_students2.additional_adaptations">additional_adaptations</column>
+      <column column="u_sped_students2.behavior_plan">behavior_plan</column>
+      <column column="u_sped_students2.books_on_tape">books_on_tape</column>
+      <column column="u_sped_students2.caseload">caseload</column>
+      <column column="u_sped_students2.disability">disability</column>
+      <column column="u_sped_students2.dont_check_spelling">dont_check_spelling</column>
+      <column column="u_sped_students2.essays_oral_limit_writing">essays_oral_limit_writing</column>
+      <column column="u_sped_students2.extended_time_limit_asmt">extended_time_limit_asmt</column>
+      <column column="u_sped_students2.extended_time_limit_testing">extended_time_limit_testing</column>
+      <column column="u_sped_students2.extended_time_oral">extended_time_oral</column>
+      <column column="u_sped_students2.highlight_text">highlight_text</column>
+      <column column="u_sped_students2.minimize_work">minimize_work</column>
+      <column column="u_sped_students2.oral_presentation">oral_presentation</column>
+      <column column="u_sped_students2.provide_paper_notes">provide_paper_notes</column>
+      <column column="u_sped_students2.read_orally">read_orally</column>
+      <column column="u_sped_students2.reduce_exam_length">reduce_exam_length</column>
+      <column column="u_sped_students2.resource_room">resource_room</column>
+      <column column="u_sped_students2.use_calculator">use_calculator</column>
+    </columns>
+    <sql>
+      <![CDATA[
+        SELECT
+          u_sped_students2.studentsdcid,
+          u_sped_students2.additional_adaptations,
+          u_sped_students2.behavior_plan,
+          u_sped_students2.books_on_tape,
+          u_sped_students2.caseload,
+          u_sped_students2.disability,
+          u_sped_students2.dont_check_spelling,
+          u_sped_students2.essays_oral_limit_writing,
+          u_sped_students2.extended_time_limit_asmt,
+          u_sped_students2.extended_time_limit_testing,
+          u_sped_students2.extended_time_oral,
+          u_sped_students2.highlight_text,
+          u_sped_students2.minimize_work,
+          u_sped_students2.oral_presentation,
+          u_sped_students2.provide_paper_notes,
+          u_sped_students2.read_orally,
+          u_sped_students2.reduce_exam_length,
+          u_sped_students2.resource_room,
+          u_sped_students2.use_calculator
+        FROM cc
+          LEFT OUTER JOIN students ON cc.studentid = students.id
+          LEFT OUTER JOIN u_sped_students2 ON students.dcid = u_sped_students2.studentsdcid
+        WHERE cc.id = :ccid
+		]]>
+    </sql>
+  </query>
+
+</queries>
