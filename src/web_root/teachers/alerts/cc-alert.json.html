@@ -1,0 +1,50 @@
+~[tlist_sql;
+  SELECT
+    cc.id,
+    students.dcid,
+    replace(replace(replace(replace(replace(replace(replace(u_sped_students2.additional_adaptations, '\', '\\'), '"','\"'), CHR(9),'\t'),CHR(8),'\b'),CHR(13),'\r'),CHR(12),'\f'),CHR(10),'\n') as ADDITIONAL_ADAPTATIONS,
+    u_sped_students2.behavior_plan,
+    u_sped_students2.books_on_tape,
+    u_sped_students2.caseload,
+    u_sped_students2.disability,
+    u_sped_students2.dont_check_spelling,
+    u_sped_students2.essays_oral_limit_writing,
+    u_sped_students2.extended_time_limit_asmt,
+    u_sped_students2.extended_time_limit_testing,
+    u_sped_students2.extended_time_oral,
+    u_sped_students2.highlight_text,
+    u_sped_students2.minimize_work,
+    u_sped_students2.oral_presentation,
+    u_sped_students2.provide_paper_notes,
+    u_sped_students2.read_orally,
+    u_sped_students2.reduce_exam_length,
+    u_sped_students2.resource_room,
+    u_sped_students2.use_calculator
+  FROM cc
+    LEFT OUTER JOIN students ON cc.studentid = students.id
+    LEFT OUTER JOIN u_sped_students2 ON students.dcid = u_sped_students2.studentsdcid
+  WHERE cc.id = ~[gpv:ccid]
+]
+  {
+    "ccid": "~(ccid;json)",
+    "studentsdcid": "~(studentsdcid)",
+    "additional_adaptations": "~(additional_adaptations;json)",
+    "behavior_plan": "~(behavior_plan;json)",
+    "books_on_tape": "~(books_on_tape;json)",
+    "caseload": "~(caseload;json)",
+    "disability": "~(disability;json)",
+    "dont_check_spelling": "~(dont_check_spelling;json)",
+    "essays_oral_limit_writing": "~(essays_oral_limit_writing;json)",
+    "extended_time_limit_asmt": "~(extended_time_limit_asmt;json)",
+    "extended_time_limit_testing": "~(extended_time_limit_testing;json)",
+    "extended_time_oral": "~(extended_time_oral;json)",
+    "highlight_text": "~(highlight_text;json)",
+    "minimize_work": "~(minimize_work;json)",
+    "oral_presentation": "~(oral_presentation;json)",
+    "provide_paper_notes": "~(provide_paper_notes;json)",
+    "read_orally": "~(read_orally;json)",
+    "reduce_exam_length": "~(reduce_exam_length;json)",
+    "resource_room": "~(resource_room;json)",
+    "use_calculator": "~(use_calculator;json)"
+  }
+[/tlist_sql]

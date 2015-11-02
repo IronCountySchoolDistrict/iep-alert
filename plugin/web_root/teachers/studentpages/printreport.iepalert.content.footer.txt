@@ -1,2 +1,0 @@
-<!--NoLink-->
-~[wc:alert]

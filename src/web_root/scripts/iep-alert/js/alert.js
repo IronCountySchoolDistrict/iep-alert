@@ -13,9 +13,7 @@ export var fetchAlert = function() {
   fetch(alertUrl, {
       credentials: 'include'
     })
-    .then(function(response) {
-      return response.json();
-    })
+    .then(response => {return response.json()})
     .then(function(alertResp) {
       var alert;
       if (getPortal() === 'admin') {

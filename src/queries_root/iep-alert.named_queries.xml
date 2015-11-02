@@ -1,3 +1,4 @@
+<!-- Session cookie auth not usable until PowerSchool 9.x, keeping this here until then -->
 <queries>
 
   <query flattened="true" name="org.irondistrict.iep.queries.alert">
@@ -51,7 +52,7 @@
           LEFT OUTER JOIN students ON cc.studentid = students.id
           LEFT OUTER JOIN u_sped_students2 ON students.dcid = u_sped_students2.studentsdcid
         WHERE cc.id = :ccid
-		]]>
+      ]]>
     </sql>
   </query>
 

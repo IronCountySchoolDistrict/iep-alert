@@ -1,7 +1,10 @@
 {
   "ecmaFeatures": {
     "modules": true,
-    "templateStrings": true
+    "templateStrings": true,
+    "arrowFunctions": true,
+    "blockBindings": true,
+    "forOf": true
   },
   "globals": {
     "window": true

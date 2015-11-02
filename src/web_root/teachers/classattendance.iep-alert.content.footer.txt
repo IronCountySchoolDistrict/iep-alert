@@ -1,0 +1,27 @@
+<!-- Begin IEP Alert content -->
+<script type="text/template" id="alert-template">
+  <!-- Custom alert begin -->
+  <a class="dialogM" title="IEP Alert" id="iep-alert" href="/teachers/alerts/iepalert.html?frn=<%= studentfrn %>" title="Student Services Alert" data-studentfrn="<%= studentfrn %>">
+    <img id='alert-img' src="/images/iep-alert/icon-i.png" height="20" width="19" alt="Student Services Alert" border="0">
+  </a>
+  <!-- Custom alert end -->
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/fetch/0.9.0/fetch.js"></script>
+<script>
+  if (!psData) {
+    var psData = {};
+  }
+  psData.studentsdcid = '~(studentfrn)'.slice(3);
+  require.config({
+    paths: {
+      alert: '/scripts/iep-alert/js/attendance-alert',
+      bluebird: 'https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.0.2/bluebird'
+    }
+  });
+
+  require(['alert'], function(alert) {
+    alert.fetchAlert();
+  });
+</script>
+<!-- End IEP Alert content -->

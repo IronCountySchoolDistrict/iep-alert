@@ -15,5 +15,20 @@
   "bugs": {
     "url": "https://github.com/IronCountySchoolDistrict/iep-alert/issues"
   },
-  "homepage": "https://github.com/IronCountySchoolDistrict/iep-alert#readme"
+  "homepage": "https://github.com/IronCountySchoolDistrict/iep-alert#readme",
+  "devDependencies": {
+    "babel": "^6.*",
+    "babel-plugin-transform-es2015-modules-amd": "^6.0.15",
+    "eslint": "^1.7.3",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.*",
+    "gulp-debug": "^2.1.2",
+    "gulp-if": "^2.0.0",
+    "gulp-preprocess": "^1.2.0",
+    "gulp-sftp": "^0.1.5",
+    "gulp-zip": "^3.0.2",
+    "preprocessor": "^1.4.0",
+    "requirejs-babel": "0.0.8",
+    "run-sequence": "^1.1.4"
+  }
 }

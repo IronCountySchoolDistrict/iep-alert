@@ -1,8 +1,9 @@
-/* global psData, require */
+/* global psData, require, getPortal */
 import $ from 'jquery';
 import _ from 'underscore';
 
 export default function() {
+  var alertUrl;
   if (getPortal() === 'admin') {
     alertUrl = `/ws/schema/table/U_SPED_STUDENTS2/${psData.studentdcid}?projection=*`;
   } else {
