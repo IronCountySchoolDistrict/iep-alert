@@ -1,32 +1,34 @@
 /*global require, $, _, psData*/
-'use strict';
 import $ from 'jquery';
 import _ from 'underscore';
-import * as Promise from 'bluebird';
+import Promise from 'bluebird';
 
-export var fetchAlert = function() {
+export default function() {
   var studentRows = $('.studentrow');
-  var ids = $.map(studentRows, function(row) {
-    return $(row).attr('id').slice(5);
-  });
-  var promises = $.map(ids, function(id) {
-    return fetch(`/teachers/alerts/cc-alert.json.html?ccid=${id}`, {
-      credentials: 'include'
-    }).then(r => {
-      return r.json()
-    });
-  });
-  Promise.all(promises).then(function(results) {
-    results.forEach(function(alert, index) {
-      var alertTemplate = $('#alert-template').html();
-      var renderedTemplate = _.template(alertTemplate, {
-        studentfrn: '001' + alert.studentsdcid
-      });
-      if (alert.caseload) {
-        var alertsTd = $(studentRows[index]).find('td').eq(1);
-        console.log(renderedTemplate);
-        alertsTd.append(renderedTemplate);
+  var ids = $.map(studentRows, row => $(row).attr('id').slice(5));
+
+  fetch('/ws/schema/query/org.irondistrict.iep.queries.attendance_alert', {
+      credentials: 'include',
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        cc_ids: ids.join(',')
+      })
+    })
+    .then(response => response.json())
+    .then(results => {
+      if (typeof results.record !== 'undefined') {
+        results.record.forEach(alert => {
+          var alertTemplate = $('#alert-template').html();
+          var compiledTemplate = _.template(alertTemplate);
+          var select = studentRows.filter(`[id$=${alert.cc_id}]`).find('td').eq(1);
+          select.append(compiledTemplate({
+            studentfrn: '001' + alert.studentsdcid
+          }));
+        });
       }
     });
-  });
-};
+}
