@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://plugin.powerschool.pearson.com"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        description="A custom alert for students with an IEP"
+        name="IEP Alert"
+        version="1.1.0"
+        xsi:schemaLocation="http://plugin.powerschool.pearson.com plugin.xsd">
+
+
+    <access_request>
+      <field table="cc" field="id" access="FullAccess" />
+      <field table="cc" field="studentid" access="FullAccess" />
+      <field table="students" field="dcid" access="FullAccess" />
+      <field table="students" field="id" access="FullAccess" />
+    </access_request>
+
+    <publisher name="Iron County School District Data Team">
+        <contact email="data@ironmail.org"/>
+    </publisher>
+</plugin>

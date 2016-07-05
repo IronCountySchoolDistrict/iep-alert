@@ -1,4 +1,4 @@
-<!-- Begin IEP Alert content -->
+<!-- Begin Attendance Alert content -->
 <script type="text/template" id="alert-template">
   <!-- Custom alert begin -->
   <a class="dialogM" title="IEP Alert" id="iep-alert" href="/teachers/alerts/iepalert.html?frn=<%= studentfrn %>" title="Student Services Alert" data-studentfrn="<%= studentfrn %>">
@@ -15,13 +15,13 @@
   psData.studentsdcid = '~(studentfrn)'.slice(3);
   require.config({
     paths: {
-      alert: '/scripts/iep-alert/js/attendance-alert',
+      attendanceAlert: '/scripts/iep-alert/js/attendance-alert',
       bluebird: 'https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.0.2/bluebird'
     }
   });
 
-  require(['alert'], function(alert) {
-    alert.fetchAlert();
+  require(['attendanceAlert'], function(attendanceAlert) {
+    attendanceAlert.default();
   });
 </script>
-<!-- End IEP Alert content -->
+<!-- End Attendance Alert content -->

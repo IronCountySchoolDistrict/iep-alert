@@ -38,7 +38,7 @@
   });
 
   require(['alert'], function(alert) {
-    alert.fetchAlert();
+    alert.default();
   });
 </script>
 <!-- End IEP Alert content -->
