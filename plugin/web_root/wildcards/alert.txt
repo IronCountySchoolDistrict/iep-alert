@@ -29,15 +29,15 @@
     psData.studentdcid = "~(studentfrn)".slice(3);
 </script>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/fetch/0.9.0/fetch.js"></script>
 <script>
   require.config({
     paths: {
-      alert: '/scripts/iep-alert/js/alert'
+      alert: '/scripts/iep-alert/js/alert',
+      fetch: '//cdnjs.cloudflare.com/ajax/libs/fetch/0.9.0/fetch'
     }
   });
 
-  require(['alert'], function(alert) {
+  require(['alert', 'fetch'], function(alert) {
     alert.default();
   });
 </script>
