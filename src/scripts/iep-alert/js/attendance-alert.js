@@ -21,14 +21,16 @@ export default function() {
     .then(response => response.json())
     .then(results => {
       if (typeof results.record !== 'undefined') {
-        results.record.forEach(alert => {
-          var alertTemplate = $('#alert-template').html();
-          var compiledTemplate = _.template(alertTemplate);
-          var select = studentRows.filter(`[id$=${alert.cc_id}]`).find('td').eq(1);
-          select.append(compiledTemplate({
-            studentfrn: '001' + alert.studentsdcid
-          }));
-        });
+        results.record
+          .filter(alert => !!alert.caseload)
+          .forEach(alert => {
+            var alertTemplate = $('#alert-template').html();
+            var compiledTemplate = _.template(alertTemplate);
+            var select = studentRows.filter(`[id$=${alert.cc_id}]`).find('td').eq(1);
+            select.append(compiledTemplate({
+              studentfrn: '001' + alert.studentsdcid
+            }));
+          });
       }
     });
 }
