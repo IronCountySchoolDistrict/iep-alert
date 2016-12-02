@@ -20,6 +20,14 @@
                     %>
 
                     <%
+                        if(alert.additional_disability_details) {
+                    %>
+                        <li><span style="font-weight: bold;">Additional Disability Details: </span><%= alert.additional_disability_details %></li>
+                    <%
+                        }
+                    %>
+
+                    <%
                         if(alert.behavior_plan === "1") {
                     %>
                         <li><span style="font-weight: bold;">Behavioral Plan</span></li>
