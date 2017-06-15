@@ -9,7 +9,13 @@
   <link href="/images/css/print.css" rel="stylesheet" media="print">
 
   <script>
+    // send off a request to the SpecialServices.html page so if the user refreshes, they'll see the special services page, not the iframe.
     $j(document).ready(function() {
+      fetch('/admin/students/studentpages/SpecialServices.html?frn=001~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql]', {
+            credentials: 'same-origin'
+        })
+        .then(resp => resp.text());
+
       // Select all trs that contain an input OR headerSelect tag.
       var inputTableRows = $j('tr').has('input,select,textarea');
       inputTableRows.filter(':even').addClass('oddRow');
@@ -44,6 +50,9 @@
 
     ~[wc:admin_header_frame_css]<a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="SpecialServices.html?selectstudent=nosearch" target="_top">Student Selection</a> &gt; Special Services ~[wc:admin_navigation_frame_css] ~[wc:title_student_begin_css]Special
     Services~[wc:title_student_end_css]
+    <div style="text-align: right; margin-top: -70px; margin-right: 20px;">
+        <iframe src="/admin/students/studentpages/power-iep.html?frn=001~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql]" style="border: none; height: 60px;" id="myIframe" scrolling="no"></iframe>
+    </div>
     <br/>
 
     <div class="box-round">
