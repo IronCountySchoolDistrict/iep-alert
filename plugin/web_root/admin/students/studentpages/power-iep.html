@@ -36,28 +36,64 @@
             $('#toggle-event').change(function() {
                 $('#loading-spinner').toggle();
                 var toggleValue = $(this).prop('checked');
-                fetch('/ws/schema/table/u_def_ext_students/~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql]', {
+                fetch('/ws/schema/table/u_def_ext_students/~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql]?projection=*', {
                     credentials: 'same-origin',
-                    method: 'PUT',
                     headers: new Headers({
                 		'Content-Type': 'application/json',
                 		'Accept': 'application/json'
-                	}),
-                	body: JSON.stringify({
-                	    id: ~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql],
-                	    name: 'u_def_ext_students',
-                	    'tables': { 
-                	        'u_def_ext_students': {
-                	            'upload_power_iep': toggleValue ? '1' : ''
-                	        }
-                	    }
                 	})
                 })
-                    .then(function(resp){
-                        return resp.json()
-                    })
-                    .then(function(resp) {
-                        $('#loading-spinner').toggle();
+                    .then(resp => {
+                        if (resp.status !== 200) {
+                            // u_def_ext_students record does not exist for this student, so create it here.
+                            fetch('/ws/schema/table/u_def_ext_students', {
+                                credentials: 'same-origin',
+                                method: 'POST',
+                                headers: new Headers({
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json'
+                                }),
+                                body: JSON.stringify({
+                                    'tables': { 
+                                        'u_def_ext_students': {
+                                            'studentsdcid': '~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql]', 
+                                            'upload_power_iep': toggleValue ? '1' : '0'
+                                        }
+                                    }
+                                })
+                            })
+                                .then(function(resp){
+                                    return resp.json()
+                                })
+                                .then(function(resp) {
+                                    $('#loading-spinner').toggle();
+                                });
+                        } else {
+                            // u_def_ext_students record exists, so updated it here.
+                            fetch('/ws/schema/table/u_def_ext_students/~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql]', {
+                                credentials: 'same-origin',
+                                method: 'PUT',
+                                headers: new Headers({
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json'
+                                }),
+                                body: JSON.stringify({
+                                    id: ~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql],
+                                    name: 'u_def_ext_students',
+                                    'tables': { 
+                                        'u_def_ext_students': {
+                                            'upload_power_iep': toggleValue ? '1' : '0'
+                                        }
+                                    }
+                                })
+                            })
+                                .then(function(resp){
+                                    return resp.json()
+                                })
+                                .then(function(resp) {
+                                    $('#loading-spinner').toggle();
+                                });
+                        }
                     });
             });
         });
