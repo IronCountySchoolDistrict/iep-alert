@@ -1,0 +1,8 @@
+<permission_mappings>
+    <permission name='/admin/students/studentpages/SpecialServices.html'>
+        <implies allow="get">/ws/schema/table/u_def_ext_students</implies>
+        <implies allow="get">/ws/schema/table/u_def_ext_students/#</implies>
+        <implies allow="put">/ws/schema/table/u_def_ext_students/#</implies>
+        <implies allow="post">/ws/schema/table/u_def_ext_students</implies>
+    </permission>
+</permission_mappings>
