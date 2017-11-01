@@ -13,29 +13,82 @@
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.js"></script>
     
 </head> 
 <body> 
     <div id="container" style="text-align: right">
+        <div id="expiration-countdown"></div>
         <i id="loading-spinner" class='fa fa-circle-o-notch fa-spin' style="display: none;"></i> 
         <input id="toggle-event" type="checkbox" 
         ~[tlist_sql;SELECT CASE
-           WHEN u_def_ext_students.upload_power_iep IS NULL OR u_def_ext_students.upload_power_iep = 0
-             THEN ''
-           ELSE 'checked' END as field_checked
-           FROM u_def_ext_students
-             JOIN students ON u_def_ext_students.studentsdcid = students.dcid
-           WHERE students.id = ~(curstudid)]~(checked)[/tlist_sql]
-        data-toggle="toggle" data-on="PowerIEP<br />Referral" data-off="Not referred<br />to PowerIEP" data-onstyle="success" data-offstyle="danger">
-        <div id="console-event"></div>
+                    WHEN
+                    u_def_ext_students.upload_power_iep IS NULL OR
+                    u_def_ext_students.upload_power_iep = 0 OR
+                    (u_def_ext_students.upload_power_iep = 1 AND trunc(SYSDATE) > u_def_ext_students.upload_power_iep_expire)
+                    THEN ''
+                    ELSE 'checked' END AS field_checked
+            FROM u_def_ext_students
+            JOIN students ON u_def_ext_students.studentsdcid = students.dcid
+            WHERE students.id = ~(curstudid)]~(checked)[/tlist_sql]
+        data-toggle="toggle" data-on="<div>PowerIEP</div><div>Referral</div>" data-off="<div>Not referred</div><div>to PowerIEP</div>" data-onstyle="success" data-offstyle="danger">
     </div>
-    
     <script>
         $(function() {
+            var uploadPowerIep = {
+                ~[tlist_sql;SELECT
+                        CASE WHEN
+                        u_def_ext_students.upload_power_iep = 1
+                        THEN 'true'
+                        ELSE 'false' END,
+                        CASE WHEN
+                        u_def_ext_students.upload_power_iep_expire IS NOT NULL
+                        THEN '"' || to_char(u_def_ext_students.upload_power_iep_expire, 'MM-DD-YYYY') || '"'
+                        ELSE 'null' END
+                    FROM u_def_ext_students
+                        JOIN students ON u_def_ext_students.studentsdcid = students.dcid
+                    WHERE students.id = ~(curstudid)]
+                    "upload": ~(upload_power_iep),
+                    "expiration_date": ~(upload_power_iep_expire)
+                [/tlist_sql]
+            };
+
+            function setExpirationCountdown(expirationDate) {
+                var nowDate = new Date();
+
+                // remove time from date object
+                var nowDateNoTime = new Date(nowDate.toDateString());
+                var expirationDateFormatted = moment(expirationDate).format('MMM Do YYYY');
+                var expirationPrefix;
+                var expirationStr;
+                if (nowDateNoTime.getTime() == expirationDate.getTime()) {
+                    expirationStr = 'Expires today';
+                } else {
+                    if (nowDate < expirationDate) {
+                        expirationPrefix = 'Expires ';
+                    } else {
+                        expirationPrefix = 'Expired ';
+                    }
+                    expirationStr = expirationPrefix + expirationDateFormatted;
+                }
+                $('#expiration-countdown').html(expirationStr);
+
+                $('#expiration-countdown').show();
+            }
+
+            if (uploadPowerIep.expiration_date) {
+                uploadPowerIep.expiration_date = new Date(uploadPowerIep.expiration_date);
+                var date = new Date();
+
+                // Only display expiration countdown if upload is true and has date, or if upload is true and date is in the past
+                if ((uploadPowerIep.upload && uploadPowerIep.expiration_date) || (!uploadPowerIep.upload && uploadPowerIep.expiration_date < date)) {
+                    setExpirationCountdown(uploadPowerIep.expiration_date);
+                }
+            }
             
             $('#toggle-event').change(function() {
                 $('#loading-spinner').toggle();
-                var toggleValue = $(this).prop('checked');
+                var toggleValue = $(this).is(':checked');
                 fetch('/ws/schema/table/u_def_ext_students/~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql]?projection=*', {
                     credentials: 'same-origin',
                     headers: new Headers({
@@ -44,56 +97,67 @@
                 	})
                 })
                     .then(resp => {
+                        var reqBody;
+                        var reqMethod;
+                        var reqUrl;
                         if (resp.status !== 200) {
                             // u_def_ext_students record does not exist for this student, so create it here.
-                            fetch('/ws/schema/table/u_def_ext_students', {
-                                credentials: 'same-origin',
-                                method: 'POST',
-                                headers: new Headers({
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'application/json'
-                                }),
-                                body: JSON.stringify({
-                                    'tables': { 
-                                        'u_def_ext_students': {
-                                            'studentsdcid': '~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql]', 
-                                            'upload_power_iep': toggleValue ? '1' : '0'
-                                        }
+                            reqBody = {
+                                'tables': { 
+                                    'u_def_ext_students': {
+                                        'studentsdcid': '~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql]', 
+                                        'upload_power_iep': toggleValue ? '1' : '0'
                                     }
-                                })
-                            })
-                                .then(function(resp){
-                                    return resp.json()
-                                })
-                                .then(function(resp) {
-                                    $('#loading-spinner').toggle();
-                                });
+                                }
+                            };
+                            reqMethod = 'POST';
+                            reqUrl = '/ws/schema/table/u_def_ext_students';
                         } else {
-                            // u_def_ext_students record exists, so updated it here.
-                            fetch('/ws/schema/table/u_def_ext_students/~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql]', {
-                                credentials: 'same-origin',
-                                method: 'PUT',
-                                headers: new Headers({
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'application/json'
-                                }),
-                                body: JSON.stringify({
-                                    id: ~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql],
-                                    name: 'u_def_ext_students',
-                                    'tables': { 
-                                        'u_def_ext_students': {
-                                            'upload_power_iep': toggleValue ? '1' : '0'
-                                        }
+                            reqBody = {
+                                id: ~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql],
+                                'name': 'u_def_ext_students',
+                                'tables': { 
+                                    'u_def_ext_students': {
+                                        'upload_power_iep': toggleValue ? '1' : '0'
                                     }
-                                })
-                            })
-                                .then(function(resp){
-                                    return resp.json()
-                                })
-                                .then(function(resp) {
-                                    $('#loading-spinner').toggle();
-                                });
+                                }
+                            };
+                            reqMethod = 'PUT';
+                            reqUrl = '/ws/schema/table/u_def_ext_students/~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql]';
                         }
+                        if (toggleValue) {
+                            var sixtyDaysInFuture = moment().add(60, 'day').toDate();
+                            uploadPowerIep.expiration_date = sixtyDaysInFuture;
+                            
+                            var uploadPowerIepDateStr = sixtyDaysInFuture.getFullYear() + '-' + parseInt(sixtyDaysInFuture.getUTCMonth() + 1)  + '-' + sixtyDaysInFuture.getUTCDate();
+                            reqBody['tables']['u_def_ext_students']['upload_power_iep_expire'] = uploadPowerIepDateStr;
+                        }
+                        fetch(reqUrl, {
+                            credentials: 'same-origin',
+                            method: reqMethod,
+                            headers: new Headers({
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }),
+                            body: JSON.stringify(reqBody)
+                        })
+                            .then(function(resp){
+                                return resp.json();
+                            })
+                            .then(function(resp) {
+                                $('#loading-spinner').toggle();
+                                var date = new Date();
+                                if (uploadPowerIepDateStr) {
+                                    var uploadExpirationDate = moment(uploadPowerIepDateStr).toDate();
+                                    setExpirationCountdown(uploadExpirationDate);
+                                }
+
+                                // hide expiration countdown if expiration date is in the future
+                                // keep showing expiration date if it's in the past because that info could be useful
+                                if (!toggleValue && date < uploadPowerIep.expiration_date) {
+                                    $('#expiration-countdown').hide();
+                                }
+                            });
                     });
             });
         });
