@@ -20,6 +20,14 @@
     <div id="container" style="text-align: right">
         <div id="expiration-countdown"></div>
         <i id="loading-spinner" class='fa fa-circle-o-notch fa-spin' style="display: none;"></i> 
+        <!-- 
+            Create a checkbox that is turned a bootstrap-toggle on page load.
+            Uses tlist_sql to determine if it should be checked based on if referral field is checked and current.
+            
+            Referral is expired if upload_power_iep <> 1 AND today's date is
+            greater than (in the future of) the upload_power_iep_expire date. Note that if today's date matches the 
+            upload_power_iep_expire date, it is still considered valid.
+        -->
         <input id="toggle-event" type="checkbox" 
         ~[tlist_sql;SELECT CASE
                     WHEN
@@ -31,7 +39,11 @@
             FROM u_def_ext_students
             JOIN students ON u_def_ext_students.studentsdcid = students.dcid
             WHERE students.id = ~(curstudid)]~(checked)[/tlist_sql]
-        data-toggle="toggle" data-on="<div>PowerIEP</div><div>Referral</div>" data-off="<div>Not referred</div><div>to PowerIEP</div>" data-onstyle="success" data-offstyle="danger">
+        data-toggle="toggle" 
+        data-on="<div>PowerIEP</div><div>Referral</div>" data-off="<div>Not referred</div><div>to PowerIEP</div>" 
+        data-onstyle="success" 
+        data-offstyle="danger" />
+
     </div>
     <script>
         $(function() {
@@ -147,9 +159,8 @@
                             .then(function(resp) {
                                 $('#loading-spinner').toggle();
                                 var date = new Date();
-                                if (uploadPowerIepDateStr) {
-                                    var uploadExpirationDate = moment(uploadPowerIepDateStr).toDate();
-                                    setExpirationCountdown(uploadExpirationDate);
+                                if (sixtyDaysInFuture) {
+                                    setExpirationCountdown(sixtyDaysInFuture);
                                 }
 
                                 // hide expiration countdown if expiration date is in the future
