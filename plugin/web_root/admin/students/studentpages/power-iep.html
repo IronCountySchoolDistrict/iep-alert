@@ -23,7 +23,7 @@
         <!-- 
             Create a checkbox that is turned a bootstrap-toggle on page load.
             Uses tlist_sql to determine if it should be checked based on if referral field is checked and current.
-            
+
             Referral is expired if upload_power_iep <> 1 AND today's date is
             greater than (in the future of) the upload_power_iep_expire date. Note that if today's date matches the 
             upload_power_iep_expire date, it is still considered valid.
@@ -55,7 +55,7 @@
                         ELSE 'false' END,
                         CASE WHEN
                         u_def_ext_students.upload_power_iep_expire IS NOT NULL
-                        THEN '"' || to_char(u_def_ext_students.upload_power_iep_expire, 'MM-DD-YYYY') || '"'
+                        THEN '"' || to_char(u_def_ext_students.upload_power_iep_expire, 'YYYY-MM-DD') || '"'
                         ELSE 'null' END
                     FROM u_def_ext_students
                         JOIN students ON u_def_ext_students.studentsdcid = students.dcid
@@ -89,7 +89,7 @@
             }
 
             if (uploadPowerIep.expiration_date) {
-                uploadPowerIep.expiration_date = new Date(uploadPowerIep.expiration_date);
+                uploadPowerIep.expiration_date = moment(uploadPowerIep.expiration_date).toDate();
                 var date = new Date();
 
                 // Only display expiration countdown if upload is true and has date, or if upload is true and date is in the past
