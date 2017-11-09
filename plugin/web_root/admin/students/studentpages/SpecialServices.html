@@ -50,11 +50,7 @@
 
     ~[wc:admin_header_frame_css]<a href="/admin/home.html" target="_top">Start Page</a> &gt; <a href="SpecialServices.html?selectstudent=nosearch" target="_top">Student Selection</a> &gt; Special Services ~[wc:admin_navigation_frame_css] ~[wc:title_student_begin_css]Special
     Services~[wc:title_student_end_css]
-    <div style="text-align: right; margin-top: -80px; margin-right: 20px;">
-        <iframe src="/admin/students/studentpages/power-iep.html?frn=001~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql]" style="border: none; height: 74px;" id="myIframe" scrolling="no"></iframe>
-    </div>
-    <br/>
-
+    
     <div class="box-round">
 
       <table border="0" cellspacing="0" cellpadding="4" id="specser1">
@@ -256,6 +252,21 @@
     <br/> ~[wc:admin_footer_css]
 
   </form>
+
+  <script type="text/template" id="power-iep-template">
+    <div style="text-align: right; margin-top: -40px;">
+      <iframe src="/admin/students/studentpages/power-iep.html?frn=001~[tlist_sql;select dcid from students where id=~(curstudid)]~(dcid)[/tlist_sql]" style="border: none; height: 74px;" id="myIframe" scrolling="no"></iframe>
+    </div>
+  </script>
+
+  <script>
+    $j(function(){ 
+      var powerIepTemplate = $j('#power-iep-template').html();
+      var studentInfoH1 = $j('.account-photo').siblings('h1');
+      studentInfoH1.append(powerIepTemplate);
+      studentInfoH1.css({'margin-bottom': '-15px'});
+    });
+  </script>
 
 </body>
 
