@@ -15,7 +15,7 @@ export default merge(common, {
         path: path.resolve(__dirname, 'dist/web_root'),
         filename: `scripts/${module.exports.name}/js/[name].js`,
         publicPath: 'https://ps.irondistrict.org',
-        library: "iep-alert",
+        library: '[name]',
         libraryTarget: 'amd' 
     },
     module: {
