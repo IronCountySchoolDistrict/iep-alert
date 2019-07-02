@@ -1,7 +1,6 @@
 /*global require, $, _, psData*/
 import $ from 'jquery';
 import _ from 'underscore';
-import Promise from 'bluebird';
 
 export default function() {
   var studentRows = $('.studentrow');
