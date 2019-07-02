@@ -14,7 +14,8 @@ const config = {
         hints: false
     },
     externals: {
-        jquery: 'jquery'
+        jquery: 'jquery',
+        underscore: 'underscore' 
     },
     optimization: {
         splitChunks: {

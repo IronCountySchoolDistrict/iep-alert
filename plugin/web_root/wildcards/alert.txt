@@ -33,7 +33,7 @@
   require.config({
     paths: {
       alert: '/scripts/iep-alert/js/alert',
-      fetch: '//cdnjs.cloudflare.com/ajax/libs/fetch/0.9.0/fetch'
+      fetch: '//cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch'
     }
   });
 
