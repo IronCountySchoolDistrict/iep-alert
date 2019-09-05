@@ -14,14 +14,13 @@
   psData.studentsdcid = '~(studentfrn)'.slice(3);
   require.config({
     paths: {
-      attendanceAlert: '/scripts/iep-alert/js/attendance-alert',
-      bluebird: '//cdnjs.cloudflare.com/ajax/libs/bluebird/3.0.2/bluebird',
-      fetch: '//cdnjs.cloudflare.com/ajax/libs/fetch/0.9.0/fetch'
+      'attendance-alert': '/scripts/iep-alert/js/attendance-alert',
+      fetch: '//cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch'
     },
     urlArgs: (new Date().getTime())
   });
 
-  require(['attendanceAlert', 'fetch'], function(attendanceAlert) {
+  require(['attendance-alert', 'fetch'], function(attendanceAlert) {
     attendanceAlert.default();
   });
 </script>
