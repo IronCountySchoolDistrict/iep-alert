@@ -40,6 +40,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "gulp4-ps-tasks": "^0.1.9" 
+    "gulp4-ps-tasks": "^0.1.9"
   }
 }
